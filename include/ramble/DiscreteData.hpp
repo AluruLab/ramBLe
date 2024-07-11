@@ -20,7 +20,7 @@
 #ifndef DISCRETEDATA_HPP_
 #define DISCRETEDATA_HPP_
 
-#include "GSquare.hpp"
+#include "ramble/GSquare.hpp"
 
 #include "mxx/comm.hpp"
 #include "utils/Timer.hpp"
@@ -116,6 +116,6 @@ private:
   TIMER_DECLARE(m_timer, mutable);
 };
 
-#include "detail/DiscreteData.hpp"
+#include "ramble/detail/DiscreteData.hpp"
 
 #endif // DISCRETEDATA_HPP_

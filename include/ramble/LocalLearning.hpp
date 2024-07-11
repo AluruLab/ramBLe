@@ -20,7 +20,7 @@
 #ifndef LOCALLEARNING_HPP_
 #define LOCALLEARNING_HPP_
 
-#include "ConstraintBasedLearning.hpp"
+#include "ramble/ConstraintBasedLearning.hpp"
 
 
 /**
@@ -85,6 +85,6 @@ protected:
   mutable std::unordered_map<Var, bool> m_cachedMBSymmetric;
 }; // class LocalLearning
 
-#include "detail/LocalLearning.hpp"
+#include "ramble/detail/LocalLearning.hpp"
 
 #endif // LOCALLEARNING_HPP_

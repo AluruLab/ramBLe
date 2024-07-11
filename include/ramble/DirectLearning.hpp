@@ -20,7 +20,7 @@
 #ifndef DIRECTLEARNING_HPP_
 #define DIRECTLEARNING_HPP_
 
-#include "LocalLearning.hpp"
+#include "ramble/LocalLearning.hpp"
 
 
 /**
@@ -176,6 +176,6 @@ private:
   getSkeleton_parallel(const bool, const double) const override;
 }; // class GetPC
 
-#include "detail/DirectLearning.hpp"
+#include "ramble/detail/DirectLearning.hpp"
 
 #endif // DIRECTLEARNING_HPP_

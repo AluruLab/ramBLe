@@ -20,6 +20,8 @@ import os
 import platform
 
 topDir = os.path.abspath(os.getcwd())
+srcIncludeDir = os.path.join(topDir, 'include')
+extDir = os.path.join(topDir, 'ext')
 cpp = '' if ARGUMENTS.get('CCACHE', 0) in [0, '0'] else 'ccache '
 buildDir = None
 targetSuffix = ''
@@ -27,6 +29,8 @@ targetSuffix = ''
 
 cppPaths = [
             topDir,
+            srcIncludeDir,
+            extDir
             ]
 
 cppFlags = [
@@ -56,7 +60,7 @@ localIncludePaths = ARGUMENTS.get('LOCALINCLUDES')
 if localIncludePaths is not None:
   cppPaths.extend(localIncludePaths.split())
 # Location of the mxx directory
-mxxDir = ARGUMENTS.get('MXX', os.path.join(topDir, 'mxx'))
+mxxDir = ARGUMENTS.get('MXX', os.path.join(extDir, 'mxx'))
 if os.path.exists(mxxDir):
   cppPaths.append(os.path.join(mxxDir, 'include'))
   cppPaths.append(os.path.join(mxxDir, 'gtest'))

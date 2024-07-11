@@ -93,6 +93,6 @@ private:
   Graph<GenericBoostGraph, boost::filtered_graph<GraphImpl, AntiParallelEdgeFilter>, Var> m_directed;
 }; // class BayesianNetwork
 
-#include "detail/BayesianNetwork.hpp"
+#include "ramble/detail/BayesianNetwork.hpp"
 
 #endif // BAYESIANNETWORK_HPP_

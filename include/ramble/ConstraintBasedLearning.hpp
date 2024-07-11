@@ -20,7 +20,7 @@
 #ifndef CONSTRAINTBASEDLEARNING_HPP_
 #define CONSTRAINTBASEDLEARNING_HPP_
 
-#include "BayesianNetwork.hpp"
+#include "ramble/BayesianNetwork.hpp"
 
 #include "mxx/comm.hpp"
 #include "utils/Timer.hpp"
@@ -106,6 +106,6 @@ protected:
   TIMER_DECLARE(m_tDirect, mutable);
 }; // class ConstraintBasedLearning
 
-#include "detail/ConstraintBasedLearning.hpp"
+#include "ramble/detail/ConstraintBasedLearning.hpp"
 
 #endif // CONSTRAINTBASEDLEARNING_HPP_

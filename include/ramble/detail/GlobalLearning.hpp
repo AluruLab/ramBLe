@@ -167,7 +167,7 @@ GlobalLearning<Data, Var, Set>::fixWeightedImbalance(
       double leftWeight = myTotalWeight;
       std::vector<double> myWeightsPrefix(myWeights.size());
       std::partial_sum(myWeights.cbegin(), myWeights.cend(), myWeightsPrefix.begin());
-      for (; std::isgreater(leftWeight, 0) && (proc < this->m_comm.size()); ++proc) {
+      for (; std::isgreater(leftWeight, 0) && (proc < static_cast<uint32_t>(this->m_comm.size())); ++proc) {
         double sendWeight = std::min<double>((div * (proc + 1)) - globalPrefix, leftWeight);
         auto procLast = std::distance(myWeightsPrefix.cbegin(),
                                       std::lower_bound(myWeightsPrefix.cbegin(),

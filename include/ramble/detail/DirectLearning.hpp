@@ -333,7 +333,7 @@ DirectLearning<Data, Var, Set>::getSkeleton_parallel(
   }
   // Correctly set the cached version of all the PC sets
   // All the sets have been symmetry corrected
-  for (const auto x : allNeighbors) {
+  for (const auto& x : allNeighbors) {
     this->m_cachedPCSymmetric[x.first] = true;
   }
   this->m_cachedPC = std::move(allNeighbors);

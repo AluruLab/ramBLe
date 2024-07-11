@@ -20,7 +20,7 @@
 #ifndef BLANKETLEARNING_HPP_
 #define BLANKETLEARNING_HPP_
 
-#include "LocalLearning.hpp"
+#include "ramble/LocalLearning.hpp"
 
 
 /**
@@ -146,6 +146,6 @@ private:
   growShrink(std::vector<std::tuple<Var, Var, double>>&&, std::unordered_map<Var, Set>&, std::set<std::pair<Var, Var>>&, const double) const override;
 }; // class InterIAMB
 
-#include "detail/BlanketLearning.hpp"
+#include "ramble/detail/BlanketLearning.hpp"
 
 #endif // BLANKETLEARNING_HPP_

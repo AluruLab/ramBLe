@@ -20,7 +20,7 @@
 #ifndef GLOBALLEARNING_HPP_
 #define GLOBALLEARNING_HPP_
 
-#include "ConstraintBasedLearning.hpp"
+#include "ramble/ConstraintBasedLearning.hpp"
 
 
 /**
@@ -114,6 +114,6 @@ private:
   getSkeleton_parallel(const bool, const double) const override;
 }; // class PCStable2
 
-#include "detail/GlobalLearning.hpp"
+#include "ramble/detail/GlobalLearning.hpp"
 
 #endif // GLOBALLEARNING_HPP_

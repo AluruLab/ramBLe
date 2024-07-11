@@ -26,8 +26,8 @@ boostLibs = [
              ]
 
 srcFiles = [
-            'ProgramOptions.cpp',
-            'ramble.cpp',
+            'src/ProgramOptions.cpp',
+            'src/ramble.cpp',
             ]
 
 built = False

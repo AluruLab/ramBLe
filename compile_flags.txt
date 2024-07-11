@@ -1,0 +1,8 @@
+-I./
+-I./include/
+-I./mxx/include
+-I./mxx/ext/
+-I/usr/include
+-I/usr/local/include
+-I/usr/lib/x86_64-linux-gnu/openmpi/include
+-I/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi

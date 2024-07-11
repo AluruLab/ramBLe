@@ -447,10 +447,10 @@ BlanketLearning<Data, Var, Set>::getSkeleton_parallel(
   TIMER_PAUSE(this->m_tNeighbors);
   // Correctly set the cached version of all the PC and MB sets
   // All the sets have been symmetry corrected
-  for (const auto x : allNeighbors) {
+  for (const auto& x : allNeighbors) {
     this->m_cachedPCSymmetric[x.first] = true;
   }
-  for (const auto x : allBlankets) {
+  for (const auto& x : allBlankets) {
     this->m_cachedMBSymmetric[x.first] = true;
   }
   this->m_cachedPC = std::move(allNeighbors);

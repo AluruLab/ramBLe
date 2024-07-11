@@ -18,11 +18,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "BlanketLearning.hpp"
-#include "DirectLearning.hpp"
-#include "DiscreteData.hpp"
-#include "GlobalLearning.hpp"
-#include "ProgramOptions.hpp"
+#include "ramble/BlanketLearning.hpp"
+#include "ramble/DirectLearning.hpp"
+#include "ramble/DiscreteData.hpp"
+#include "ramble/GlobalLearning.hpp"
+#include "ramble/ProgramOptions.hpp"
 
 #include "common/CTCounter.hpp"
 #include "common/DataReader.hpp"
@@ -145,7 +145,7 @@ learnNetwork(
       }
     }
     if (comm.is_first()) {
-      for (const auto var : neighborhoodVars) {
+      for (const auto& var : neighborhoodVars) {
         std::cout << var << ",";
       }
       std::cout << std::endl;
