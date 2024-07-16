@@ -20,7 +20,7 @@
 #ifndef TEST_NETWORKDATA_HPP_
 #define TEST_NETWORKDATA_HPP_
 
-#include "DiscreteData.hpp"
+#include "ramble/DiscreteData.hpp"
 
 #include "common/CTCounter.hpp"
 

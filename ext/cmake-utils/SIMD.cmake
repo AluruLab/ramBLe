@@ -6,9 +6,10 @@ if (USE_SIMD)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
     
     if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-        #add_compile_options(-fabi-version=0)
-	    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fabi-version=0 -fopenmp-simd -ftree-vectorize")
-	    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fabi-version=0 -fopenmp-simd -ftree-vectorize")    
+	    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopenmp-simd -ftree-vectorize")
+	    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp-simd -ftree-vectorize")    
+        # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fabi-version=0")
+        # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fabi-version=0")    
     endif()
     
     add_definitions(-DUSE_SIMD)

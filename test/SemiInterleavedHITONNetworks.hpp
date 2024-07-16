@@ -20,7 +20,7 @@
 #ifndef TEST_SIHITONNETWORKS_HPP_
 #define TEST_SIHITONNETWORKS_HPP_
 
-#include "DirectLearning.hpp"
+#include "ramble/DirectLearning.hpp"
 #include "NetworkData.hpp"
 
 

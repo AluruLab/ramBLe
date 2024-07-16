@@ -21,8 +21,8 @@
 #define TEST_DIRECTLEARNING_HPP_
 
 #include "Environment.hpp"
-#include "DiscreteData.hpp"
-#include "DirectLearning.hpp"
+#include "ramble/DiscreteData.hpp"
+#include "ramble/DirectLearning.hpp"
 
 
 using Counter = CTCounter<>;

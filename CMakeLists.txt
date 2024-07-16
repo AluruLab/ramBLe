@@ -1,28 +1,31 @@
 cmake_minimum_required(VERSION 3.14)
+include(CheckIncludeFile)
+include(CheckSymbolExists)
 
 # project settings
 project(ramble C CXX)
 
-set (ramble_VERSION_MAJOR 1)
-set (ramble_VERSION_MINOR 0)
-set (ramble_VERSION_PATCH 0)
-set (ramble_VERSION_TWEAK 0)
-set(CMAKE_VERBOSE_MAKEFILE ON)
+set(ramble_VERSION_MAJOR 1)
+set(ramble_VERSION_MINOR 0)
+set(ramble_VERSION_PATCH 0)
+set(ramble_VERSION_TWEAK 0)
+set(RAMBLE_APP ramble)
+set(RAMBLE_TEST_APP ramble_test)
 
-INCLUDE(CMakeDependentOption)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Requires at least C++14
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Initialize CXXFLAGS.
+# Initialize CXXFLAGS and CFLAGS.
 set(BASE_OPT_FLAGS "-ffast-math -funroll-loops")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wuninitialized -Wextra -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fPIC")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${BASE_OPT_FLAGS}")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} ${BASE_OPT_FLAGS}")
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wuninitialized -Wextra -fPIC")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -fPIC")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${BASE_OPT_FLAGS}")
 set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} ${BASE_OPT_FLAGS}")
@@ -34,6 +37,28 @@ IF(NOT CMAKE_BUILD_TYPE)
       FORCE)
 ENDIF(NOT CMAKE_BUILD_TYPE)
 
+IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  SET(ENABLE_LOGGING ON)
+ENDIF()
+
+# Building Options 
+OPTION(BUILD_TESTS "whether Tests should be built" OFF)
+OPTION(ENABLE_LOGGING "whether Logging should be built" OFF)
+OPTION(ENABLE_PROFILING "whether Profiling should be built" OFF)
+OPTION(ENABLE_SANITIZER "whether Sanitizer should be enabled" OFF)
+
+# Warning Options
+set(COMPILER_WARNINGS ON)
+set(COMPILER_EXTRA_WARNINGS ON)
+set(COMPILER_WARNINGS_ENABLE_EXTRA ON)
+set(COMPILER_WARNINGS_ENABLE_CONVERSIONS OFF)
+set(COMPILER_WARNINGS_ENABLE_SUGGESTIONS OFF)
+
+# Sanitizer or Profiling
+if (ENABLE_SANITIZER)
+    set(SANITIZER_STYLE address leak undefined)
+endif()
+
 # External directories
 set(EXT_PROJECTS_DIR ${PROJECT_SOURCE_DIR}/ext)
 set(CMAKE_MODULE_DIR ${PROJECT_SOURCE_DIR}/ext/cmake-utils)
@@ -43,67 +68,102 @@ include("${CMAKE_MODULE_DIR}/CompilerProfiling.cmake")
 # include("${CMAKE_MODULE_DIR}/OpenMP.cmake")
 include("${CMAKE_MODULE_DIR}/MPI.cmake")
 include("${CMAKE_MODULE_DIR}/SIMD.cmake")
+include("${CMAKE_MODULE_DIR}/Builtins.cmake")
+include("${CMAKE_MODULE_DIR}/AVX.cmake")
+include("${CMAKE_MODULE_DIR}/SSE.cmake")
 include("${CMAKE_MODULE_DIR}/Boost.cmake")
 # include("${CMAKE_MODULE_DIR}/HDF5.cmake")
-# include("${CMAKE_MODULE_DIR}/CodeAnalysis.cmake")
+include("${CMAKE_MODULE_DIR}/CodeAnalysis.cmake")
 include("${CMAKE_MODULE_DIR}/Sanitizer.cmake")
 
-# Check if the user want to build applications
-OPTION(BUILD_APPLICATIONS "whether applications should be built" ON)
-OPTION(BUILD_TESTS "whether tests should be built" OFF)
-
-# library usage.
-OPTION(USE_ZLIB "whether mcpnet should use ZLIB" OFF)
-
-###### Executable and Libraries
-# Save libs and executables in the same place
+# Save libraries and executables in the same place
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE PATH "Output directory for libraries" )
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin CACHE PATH "Output directory for applications" )
 
-
-# add the binary tree to the search path for include files
+# Add the binary tree to the search path for include files
 include_directories("${PROJECT_SOURCE_DIR}/include")
+# Add external dependencis to the search path
 include_directories("${EXT_PROJECTS_DIR}")
 include_directories("${EXT_PROJECTS_DIR}/mxx/include")
 include_directories("${EXT_PROJECTS_DIR}/mxx/ext/")
 
-if (BUILD_APPLICATIONS)
-    set(RAMBLE_APP ramble)
-    set(app_compile_defs "-DVERBOSE")
-    set(app_compile_flags "")
-    set(app_link_flags "")
-    set(app_link_libs "m" Boost::system Boost::program_options Boost::filesystem)
+# Definitions, Flags and Libraries
+set(app_compile_defs "-DVERBOSE")
+set(app_compile_flags "")
+set(app_link_flags "")
+set(app_link_libs "m" Boost::system Boost::program_options Boost::filesystem)
 
-    if (CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
-        set(app_compile_defs "${app_compile_defs};-DHAVE_INTEL_ICC")
-        if (PRINT_VEC_REPORT)
-            set(app_compile_flags "${app_compile_flags};-qopt-report=5;-qopt-report-phase=vec;-qopt-report-file=stdout")
-        endif(PRINT_VEC_REPORT)
-    
-    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-        if (PRINT_VEC_REPORT)
-            set(app_compile_flags "${app_compile_flags};-ftree-vectorizer-verbose=4")
-        endif(PRINT_VEC_REPORT)
-    endif()
-
-    add_executable(${RAMBLE_APP} src/ramble.cpp src/ProgramOptions.cpp)
-    foreach (cdef IN LISTS app_compile_defs)
-        target_compile_definitions(${RAMBLE_APP} PRIVATE ${cdef})
-    endforeach(cdef)
-    foreach (cflgs IN LISTS app_compile_flags)
-        target_compile_options(${RAMBLE_APP} PRIVATE ${cflgs})
-    endforeach(cflgs)
-    target_link_libraries(${RAMBLE_APP} ${app_link_flags} ${app_link_libs} ${EXTRA_LIBS})
-
-    if (USE_MPI)
-        target_compile_definitions(${RAMBLE_APP} PRIVATE -DUSE_MPI)
-        # MPI_LIBRARIES already in EXTRA_LIBS
-    endif(USE_MPI)
+# One of AVX2, AVX512 BW, SSE 4.1 or SSE 4.2 should be supported
+if(NOT (AVX2_SUPPORTED OR AVX512BW_SUPPORTED OR SSE41_SUPPORTED OR SSE42_SUPPORTED))
+    message(FATAL_ERROR "No Vectorization Support: one of AVX2 AVX512 SSE4.1 SSE 4.2 support required")
 endif()
+
+if(AVX2_SUPPORTED)
+    set(app_compile_defs "${app_compile_defs};-DHAVE_AVX2_INSTRUCTIONS")
+endif()
+
+if(AVX512BW_SUPPORTED)
+    set(app_compile_defs "${app_compile_defs};-DHAVE_AVX512_INSTRUCTIONS")
+endif()
+
+# mm_malloc.h header should exist and _mm_malloc function should be available
+check_include_file(mm_malloc.h MM_MALLOC_HDR_EXISTS)
+check_symbol_exists(_mm_malloc "mm_malloc.h" MM_MALLOC_FN_EXISTS)
+if(NOT (MM_MALLOC_HDR_EXISTS AND MM_MALLOC_FN_EXISTS))
+    message(FATAL_ERROR "_mm_malloc is required by the bitvector counter from SABNAtk")
+endif()
+
+# Vectorization report
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+    set(app_compile_defs "${app_compile_defs};-DHAVE_INTEL_ICC")
+    if (PRINT_VEC_REPORT)
+        set(app_compile_flags "${app_compile_flags};-qopt-report=5;-qopt-report-phase=vec;-qopt-report-file=stdout")
+    endif(PRINT_VEC_REPORT)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    if (PRINT_VEC_REPORT)
+        set(app_compile_flags "${app_compile_flags};-ftree-vectorizer-verbose=4")
+    endif(PRINT_VEC_REPORT)
+endif()
+
+# If Logging enabled, add dependencies to compile definitions and link flags
+if(ENABLE_LOGGING)
+    set(app_compile_defs "${app_compile_defs};-DLOGGING")
+    set(app_link_libs ${app_link_libs} Boost::log Boost::log_setup 
+        Boost::thread)
+endif()
+
+# If sanitizer enabled, add sanitizer compile flags and link flags
+if(ENABLE_SANITIZER)
+    set(app_compile_flags "${app_compile_flags};${SANITIZER_COMPILE_FLAGS}")
+    set(app_link_flags "${app_link_flags};${SANITIZER_LINK_FLAGS}")
+endif()
+
+add_executable(${RAMBLE_APP} src/ramble.cpp src/ProgramOptions.cpp)
+foreach (cdef IN LISTS app_compile_defs)
+    target_compile_definitions(${RAMBLE_APP} PRIVATE ${cdef})
+endforeach(cdef)
+foreach (cflgs IN LISTS app_compile_flags)
+    target_compile_options(${RAMBLE_APP} PRIVATE ${cflgs})
+endforeach(cflgs)
+target_link_libraries(${RAMBLE_APP} ${app_link_flags} ${app_link_libs} ${EXTRA_LIBS})
+
+if (USE_MPI)
+    # MPI_LIBRARIES already in EXTRA_LIBS
+    target_compile_definitions(${RAMBLE_APP} PRIVATE -DUSE_MPI)
+endif(USE_MPI)
 
 if (BUILD_TESTS)
-   include("${CMAKE_MODULE_DIR}/GTest.cmake")
+    include_directories("${PROJECT_SOURCE_DIR}/test")
+    include_directories("${EXT_PROJECTS_DIR}/mxx/gtest")
+    cmake_policy(SET CMP0135 NEW)
+    include("${CMAKE_MODULE_DIR}/GTest.cmake")
+    # add_subdirectory("ext/googletest")
+    add_executable(${RAMBLE_TEST_APP} test/test.cpp)
+    foreach (cdef IN LISTS app_compile_defs)
+        target_compile_definitions(${RAMBLE_TEST_APP} PRIVATE ${cdef})
+    endforeach(cdef)
+    foreach (cflgs IN LISTS app_compile_flags)
+        target_compile_options(${RAMBLE_TEST_APP} PRIVATE ${cflgs})
+    endforeach(cflgs)
+    target_link_libraries(${RAMBLE_TEST_APP} ${app_link_flags} ${app_link_libs} ${EXTRA_LIBS} GTest::gtest_main)
 endif()
-
-
-

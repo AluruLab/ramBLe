@@ -21,8 +21,8 @@
 #define TEST_BLANKETLEARNING_HPP_
 
 #include "Environment.hpp"
-#include "BlanketLearning.hpp"
-#include "DiscreteData.hpp"
+#include "ramble/BlanketLearning.hpp"
+#include "ramble/DiscreteData.hpp"
 
 #include "common/CTCounter.hpp"
 #include "common/UintSet.hpp"

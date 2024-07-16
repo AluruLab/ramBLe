@@ -21,7 +21,7 @@
 #define TEST_DATA_HPP_
 
 #include "Environment.hpp"
-#include "DiscreteData.hpp"
+#include "ramble/DiscreteData.hpp"
 
 #include "common/CTCounter.hpp"
 #include "common/UintSet.hpp"

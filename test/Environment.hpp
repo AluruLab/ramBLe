@@ -40,7 +40,7 @@ public:
     m = 8;
     reader.resize(3);
     for (uint8_t i = 0; i < 3; ++i) {
-      auto fileName = "neapolitan_" + std::to_string(i+1) + ".txt";
+      auto fileName = "data/neapolitan_" + std::to_string(i+1) + ".txt";
       reader[i] = new RowObservationReader<uint8_t>(fileName, n, m, ',', false, false, true);
     }
   }
@@ -72,7 +72,7 @@ public:
   SetUp() override {
     n = 3;
     m = 409;
-    reader = new RowObservationReader<uint8_t>("lizards.csv", n, m, ',', true, false, true);
+    reader = new RowObservationReader<uint8_t>("data/lizards.csv", n, m, ',', true, false, true);
   }
 
   void
@@ -100,7 +100,7 @@ public:
   SetUp() override {
     n = 6;
     m = 1841;
-    reader = new RowObservationReader<uint8_t>("coronary.csv", n, m, ',', true, false, true);
+    reader = new RowObservationReader<uint8_t>("data/coronary.csv", n, m, ',', true, false, true);
   }
 
   void
@@ -128,7 +128,7 @@ public:
   SetUp() override {
     n = 8;
     m = 5000;
-    reader = new RowObservationReader<uint8_t>("asia.csv", n, m, ',', true, false, true);
+    reader = new RowObservationReader<uint8_t>("data/asia.csv", n, m, ',', true, false, true);
   }
 
   void

@@ -12,8 +12,8 @@ _This project has been tested only on Linux platform, using version [9.2.0](http
 _Tested with version [1.70.0](https://www.boost.org/users/history/version_1_70_0.html)._
 * **[MPI](https://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/mpi31-report.htm)** is used for execution in parallel.  
 _Tested with [MVAPICH2 version 2.3.3](http://mvapich.cse.ohio-state.edu/static/media/mvapich/mvapich2-2.3.3-userguide.html)._
-* **[SCons](http://scons.org/)** is required for building the project.  
-_Tested with version [3.1.2](https://scons.org/doc/3.1.2/HTML/scons-user.html)._
+* **[CMake](http://cmake.org/)** is required for building the project.  
+_Tested with version [3.29](https://cmake.org/cmake/help/v3.29/)._
 * The following repositories are used as submodules:
   * **[BN Utils](https://github.com/asrivast28/bn-utils)** contains common utilities for BN learning in parallel and scripts for post-processing.  
   * **[mxx](https://gitlab.com/patflick/mxx)** is used as a C++ wrapper for MPI.  
@@ -24,30 +24,30 @@ If this dependency is not satisfied, then the unit tests are not built. See the 
 _Tested with version [1.10.0](https://github.com/google/googletest/releases/tag/release-1.10.0)._
 
 ## Building
-After the dependencies have been installed, the project can be built as:  
-<pre><code>scons
+After the dependencies have been installed, the project can be built in a build directory as follows as:  
+<pre><code>mkdir build
+    cd
+    cmake ..
+    make
 </code></pre>  
-This will create an executable named `ramble`, which can be used for constraint-based structure learning.  
+`cmake` command searches the default paths for the dependencies and configures the build.
+`make` command builds the executable named `ramble`, which can be used for constraint-based structure learning.  
 By default, all the paths from the environment in `CPATH` and `LIBRARY_PATH` variables are used as include paths and library paths.  
-Path to external includes and libraries at non-default locations can also be specified as:  
-<pre><code>scons LOCALINCLUDES=&lt;comma-delimited list of paths&gt; LOCALLIBS=&lt;comma-delimited list of paths&gt;
-</code></pre>
 
 #### Unit Tests
-The unit tests are built by default. The following can be executed for building only the executable:  
-<pre><code>scons TEST=0
+The unit tests are not built by default. cmake can be configured as follows for building the tests:  
+<pre><code>cmake -DENABLE_TESTING=ON 
 </code></pre>  
 
 #### Debug
-For building the debug version of the executable, the following can be executed:
-<pre><code>scons DEBUG=1
+For building the debug version of the executable, cmake can be run as follows:
+<pre><code>cmake -DCMAKE_BUILD_TYPE=Debug
 </code></pre>  
-Debug version of the executable is named `ramble_debug`.
 
 #### Logging
 By default, logging is disabled in the release build and enabled in the debug build.
-In order to change the default behavior, `LOGGING=[0,1]` argument can be passed to `scons`:  
-<pre><code>scons LOGGING=1 # Enables logging in the release build
+In order to change the default behavior, cmake can be configured as follows:  
+<pre><code>cmake -DENABLE_LOGGING=ON 
 </code></pre>
 Please be aware that enabling logging will affect the performance.
 

@@ -1,7 +1,8 @@
 #### MPI
 OPTION(USE_BOOST "Build with BOOST support" ON)
 if (USE_BOOST)
-    find_package(Boost REQUIRED COMPONENTS system program_options filesystem)
+    find_package(Boost REQUIRED 
+        COMPONENTS system program_options filesystem log log_setup thread)
 else(USE_BOOST)
     set(BOOST_FOUND 0)
 endif(USE_BOOST)

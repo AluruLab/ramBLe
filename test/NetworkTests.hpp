@@ -20,9 +20,9 @@
 #ifndef TEST_NETWORKTESTS_HPP_
 #define TEST_NETWORKTESTS_HPP_
 
-#include "BlanketLearning.hpp"
-#include "DirectLearning.hpp"
-#include "GlobalLearning.hpp"
+#include "ramble/BlanketLearning.hpp"
+#include "ramble/DirectLearning.hpp"
+#include "ramble/GlobalLearning.hpp"
 #include "NetworkData.hpp"
 
 

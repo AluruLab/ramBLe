@@ -1,4 +1,6 @@
 ###### Extra compiler flags and prettifying.
+include(CMakeDependentOption)
+#
 OPTION(COMPILER_EXTRA_WARNINGS "EXTRA COMPILATION OPTIONS" OFF)
 CMAKE_DEPENDENT_OPTION(COMPILER_WARNINGS_ENABLE_EXTRA "Enable compiler to generate extra warnings?" OFF "COMPILER_EXTRA_WARNINGS" OFF)
 CMAKE_DEPENDENT_OPTION(COMPILER_WARNINGS_ENABLE_CONVERSIONS "Enable compiler to generate extra warnings for type conversions?" OFF "COMPILER_WARNINGS" OFF)

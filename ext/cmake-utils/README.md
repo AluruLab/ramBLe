@@ -1,3 +1,5 @@
-# Utilties for cmake
+# CMake scripts for finding C/C++ dependencies
 
-Copy of (https://bitbucket.org/tcpan/cmake-utils)[https://bitbucket.org/tcpan/cmake-utils]
+Except for AVX.cmake, Builtins.cmake and SSE.cmake, 
+the rest of the scripts are obtained from
+[https://bitbucket.org/tcpan/cmake-utils](https://bitbucket.org/tcpan/cmake-utils)

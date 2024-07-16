@@ -20,7 +20,7 @@
 #ifndef TEST_IAMBNETWORKS_HPP_
 #define TEST_IAMBNETWORKS_HPP_
 
-#include "BlanketLearning.hpp"
+#include "ramble/BlanketLearning.hpp"
 #include "NetworkData.hpp"
 
 

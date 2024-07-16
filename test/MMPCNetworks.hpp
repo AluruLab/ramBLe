@@ -20,7 +20,7 @@
 #ifndef TEST_MMPCNETWORKS_HPP_
 #define TEST_MMPCNETWORKS_HPP_
 
-#include "DirectLearning.hpp"
+#include "ramble/DirectLearning.hpp"
 #include "NetworkData.hpp"
 
 

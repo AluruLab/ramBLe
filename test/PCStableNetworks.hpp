@@ -20,7 +20,7 @@
 #ifndef TEST_PCSTABLENETWORKS_HPP_
 #define TEST_PCSTABLENETWORKS_HPP_
 
-#include "BlanketLearning.hpp"
+#include "ramble/BlanketLearning.hpp"
 #include "NetworkData.hpp"
 
 
