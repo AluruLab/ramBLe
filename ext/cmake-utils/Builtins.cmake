@@ -20,14 +20,4 @@ else
 check_cxx_source_runs("${CTZLL_CXX_CODE}" BUILTIN_CTZLL_FOUND)
 check_cxx_source_runs("${POPCOUNTLL_CXX_CODE}" BUILTIN_POPCOUNTLL_FOUND)
 
-if(BUILTIN_CTZLL_FOUND)
-  message("__builtin_ctzll found")
-else()
-  message("__builtin_ctzll NOT found")
-endif()
 
-if(BUILTIN_POPCOUNTLL_FOUND)
-  message("__builtin_popcountll found")
-else()
-  message("__builtin_popcountll NOT found")
-endif()

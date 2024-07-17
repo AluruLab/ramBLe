@@ -25,21 +25,13 @@ return 0;
 
 # Check for SSE41 support
 check_cxx_source_compiles("${SSE41_CXX_CODE}" SSE41_SUPPORTED)
-# Check for AVX-512F support
+# Check for SSE42 support
 check_cxx_source_compiles("${SSE42_CXX_CODE}" SSE42_SUPPORTED)
 
 #
-if(SSE41_SUPPORTED)
-    message("SSE 4.1 is supported")
-    add_definitions(-msse4.1)
-else()
-    message("SSE 4.1 is not supported")
-endif()
-
 if(SSE42_SUPPORTED)
-    message("SSE 4.2 is supported")
+    add_definitions(-msse4.2)
+elseif(SSE41_SUPPORTED)
     add_definitions(-msse4.1)
-else()
-    message("SSE 4.2 is not supported")
 endif()
 

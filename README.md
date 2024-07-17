@@ -26,9 +26,9 @@ _Tested with version [1.10.0](https://github.com/google/googletest/releases/tag/
 ## Building
 After the dependencies have been installed, the project can be built in a build directory as follows as:  
 <pre><code>mkdir build
-    cd
-    cmake ..
-    make
+cd
+cmake ..
+make
 </code></pre>  
 `cmake` command searches the default paths for the dependencies and configures the build.
 `make` command builds the executable named `ramble`, which can be used for constraint-based structure learning.  
@@ -36,23 +36,23 @@ By default, all the paths from the environment in `CPATH` and `LIBRARY_PATH` var
 
 #### Unit Tests
 The unit tests are not built by default. cmake can be configured as follows for building the tests:  
-<pre><code>cmake -DENABLE_TESTING=ON 
+<pre><code>cmake -DENABLE_TESTING=ON  ..
 </code></pre>  
 
 #### Debug
 For building the debug version of the executable, cmake can be run as follows:
-<pre><code>cmake -DCMAKE_BUILD_TYPE=Debug
+<pre><code>cmake -DCMAKE_BUILD_TYPE=Debug ..
 </code></pre>  
 
 #### Logging
 By default, logging is disabled in the release build and enabled in the debug build.
 In order to change the default behavior, cmake can be configured as follows:  
-<pre><code>cmake -DENABLE_LOGGING=ON 
+<pre><code>cmake -DENABLE_LOGGING=ON ..
 </code></pre>
 Please be aware that enabling logging will affect the performance.
 
 #### Timing
-Timing of high-level operations can be enabled by passing `TIMER=1` argument to `scons`.
+Timing of high-level operations can be enabled by passing `-DENABLE_TIMER=ON` argument to `cmake`.
 
 ## Execution
 Once the project has been built, the executable can be used for learning BN as follows:

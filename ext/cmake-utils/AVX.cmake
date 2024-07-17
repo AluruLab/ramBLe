@@ -44,22 +44,13 @@ check_cxx_source_compiles("${AVX512BW_CXX_CODE}" AVX512BW_SUPPORTED)
 
 #
 if(AVX2_SUPPORTED)
-  message("AVX2 is supported")
   add_definitions(-mavx2)
-else()
-  message("AVX2 is not supported")
 endif()
 
 if(AVX512F_SUPPORTED)
-    message("AVX-512F is supported")
   add_definitions(-mavx512f)
-else()
-    message("AVX-512F is NOT supported")
 endif()
 
 if(AVX512BW_SUPPORTED)
-    message("AVX-512 B&W is supported")
-  add_definitions(-mavx512f)
-else()
-    message("AVX-512 B&W is NOT supported")
+  add_definitions(-mavx512bw)
 endif()
