@@ -14,8 +14,8 @@ set(RAMBLE_TEST_APP ramble_test)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-# Requires at least C++14
-set(CMAKE_CXX_STANDARD 14)
+# Requires at least C++17
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Initialize CXXFLAGS and CFLAGS.
@@ -92,7 +92,7 @@ include("${CMAKE_MODULE_DIR}/Builtins.cmake")
 include("${CMAKE_MODULE_DIR}/AVX.cmake")
 include("${CMAKE_MODULE_DIR}/SSE.cmake")
 include("${CMAKE_MODULE_DIR}/Boost.cmake")
-# include("${CMAKE_MODULE_DIR}/HDF5.cmake")
+include("${CMAKE_MODULE_DIR}/HDF5.cmake")
 include("${CMAKE_MODULE_DIR}/CodeAnalysis.cmake")
 include("${CMAKE_MODULE_DIR}/Sanitizer.cmake")
 
@@ -149,7 +149,7 @@ if(ENABLE_SANITIZER)
     set(app_link_flags "${app_link_flags};${SANITIZER_LINK_FLAGS}")
 endif()
 
-add_executable(${RAMBLE_APP} src/ramble.cpp src/ProgramOptions.cpp)
+add_executable(${RAMBLE_APP} src/ramble.cpp src/ProgramOptions.cpp src/learn_bn.cpp)
 foreach (cdef IN LISTS app_compile_defs)
     target_compile_definitions(${RAMBLE_APP} PRIVATE ${cdef})
 endforeach(cdef)

@@ -33,6 +33,10 @@ ProgramOptions::ProgramOptions(
     m_targetVar(),
     m_outputFile(),
     m_counterType(),
+    m_h5Path(),
+    m_h5MatrixDataPath(),
+    m_h5VarsDataPath(),
+    m_h5ObsDataPath(),
     m_alpha(),
     m_numVars(),
     m_numObs(),
@@ -63,6 +67,10 @@ ProgramOptions::ProgramOptions(
     ("algorithm,a", po::value<std::string>(&m_algoName)->default_value("gs"), "Name of the algorithm to be used.")
     ("directed,d", po::bool_switch(&m_directEdges)->default_value(false), "Orient the edges in the learned network.")
     ("output,o", po::value<std::string>(&m_outputFile), "Name of the file to which the learned network should be written.")
+    ("h5root", po::value<std::string>(&m_h5Path)->default_value("/"), "HDF5 Root Path for all data")
+    ("h5matrix", po::value<std::string>(&m_h5MatrixDataPath)->default_value("matrix"), "HDF5 path to matrix data")
+    ("h5obs", po::value<std::string>(&m_h5ObsDataPath)->default_value("col_attrs/CellID"), "HDF5 path to observations names")
+    ("h5var", po::value<std::string>(&m_h5VarsDataPath)->default_value("row_attrs/Gene"), "HDF5 path to variable names")
     ;
 
   po::options_description advanced("Advanced options");
@@ -272,6 +280,34 @@ ProgramOptions::logFile(
 ) const
 {
   return m_logFile;
+}
+
+const std::string&
+ProgramOptions::h5root(
+) const
+{
+  return m_h5Path;
+}
+
+const std::string&
+ProgramOptions::h5matrixPath(
+) const
+{
+  return m_h5MatrixDataPath;
+}
+
+const std::string&
+ProgramOptions::h5obsPath(
+) const
+{
+  return m_h5VarsDataPath;
+}
+
+const std::string&
+ProgramOptions::h5varPath(
+) const
+{
+  return m_h5VarsDataPath;
 }
 
 ProgramOptions::~ProgramOptions(

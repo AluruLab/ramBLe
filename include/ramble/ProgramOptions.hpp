@@ -105,6 +105,18 @@ public:
   const std::string&
   logFile() const;
 
+  const std::string&
+  h5root() const;
+
+  const std::string&
+  h5matrixPath() const;
+
+  const std::string&
+  h5obsPath() const;
+
+  const std::string&
+  h5varPath() const;
+
   ~ProgramOptions();
 
 private:
@@ -116,6 +128,10 @@ private:
   std::string m_targetVar;
   std::string m_outputFile;
   std::string m_counterType;
+  std::string m_h5Path;
+  std::string m_h5MatrixDataPath;
+  std::string m_h5VarsDataPath;
+  std::string m_h5ObsDataPath;
   double m_alpha;
   double m_imbalanceThreshold;
   uint32_t m_numVars;

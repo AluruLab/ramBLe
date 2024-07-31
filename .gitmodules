@@ -9,4 +9,4 @@
 	url = https://github.com/patflick/mxx.git
 [submodule "common"]
 	path = ext/common
-	url = https://github.com/asrivast28/bn-utils.git
+	url = https://github.com/AluruLab/bn-utils.git
